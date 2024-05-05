@@ -10,45 +10,35 @@ Sockets Links.
 4. Send and receive the message using the send function in socket.
 ## PROGRAM:
 ### SERVER:
-
-import socket
-HOST = '127.0.0.1'  
-PORT = 65432       
-with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-    s.bind((HOST, PORT))
-    s.listen()
-    conn, addr = s.accept()
-    with conn:
-        print('Connected by', addr)
-        while True:
-            data = conn.recv(1024)
-            if not data:
-                break
-            conn.sendall(data)
-
-
+```
+import socket 
+s=socket.socket() 
+s.bind(('localhost',8000)) 
+s.listen(5) 
+c,addr=s.accept() 
+while True: 
+    ClientMessage=c.recv(1024).decode() 
+    c.send(ClientMessage.encode())
+```
 
 ### CLIENT:
+```
+import socket 
+s=socket.socket() 
+s.connect(('localhost',8000)) 
+while True: 
+    msg=input("Client > ") 
+    s.send(msg.encode()) 
+    print("Server > ",s.recv(1024).decode()) 
 
-import socket
-HOST = '127.0.0.1'  
-PORT = 65432
-with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-    s.connect((HOST, PORT))
-    while True:
-        message = input("Enter message to send to server: ")
-        s.sendall(message.encode())
-        data = s.recv(1024)
-        print('Received', repr(data.decode()))
-
-
+```
 
 ## OUTPUT:
 ### SERVER : 
-![server](https://github.com/BaskarUmapathi/3a.Sockets_Creation_for_Echo_Client_and_Echo_Server/assets/151434098/11a35d34-e224-490d-8a30-32019b6cf2a3)
+![image](https://github.com/BaskarUmapathi/3a.Sockets_Creation_for_Echo_Client_and_Echo_Server/assets/151434098/93c732b7-355e-4098-8efd-11874c1a5b17)
 
 ### CLIENT : 
-![client](https://github.com/BaskarUmapathi/3a.Sockets_Creation_for_Echo_Client_and_Echo_Server/assets/151434098/17584c2d-3e13-44bd-9019-ad5d78f46258)
+![image](https://github.com/BaskarUmapathi/3a.Sockets_Creation_for_Echo_Client_and_Echo_Server/assets/151434098/4f44af6b-9dd3-449b-828c-6d1ef3b7bc05)
 
 
 ## RESULT
